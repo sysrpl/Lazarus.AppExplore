@@ -496,8 +496,13 @@ procedure TAppExplorerForm.RefreshSelection(Node: TTreeNode);
 
   procedure AddInheritance(Instance: TComponent);
   var
+    S: string;
     C: TClass;
   begin
+    ComponentMemo.Lines.Add('ComponentState:');
+    S := SetToString(PTypeInfo(TypeInfo(TComponentState)), Integer(Instance.ComponentState), True);
+    ComponentMemo.Lines.Add(S);
+    ComponentMemo.Lines.Add('');
     ComponentMemo.Lines.Add('Inheritance:');
     C := Instance.ClassType;
     while C <> nil do
@@ -505,18 +510,6 @@ procedure TAppExplorerForm.RefreshSelection(Node: TTreeNode);
       ComponentMemo.Lines.Add('  ' + C.ClassName);
       C := C.ClassParent;
     end;
-    ComponentMemo.Lines.Add('');
-  end;
-
-  procedure AddName(Instance: TComponent);
-  var
-    S: string;
-  begin
-    if Instance.Name <> '' then
-      S := Instance.Name
-    else
-      S := '(unnamed)';
-    ComponentMemo.Lines.Add(S);
     ComponentMemo.Lines.Add('');
   end;
 
